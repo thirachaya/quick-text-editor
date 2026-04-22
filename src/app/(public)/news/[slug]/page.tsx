@@ -25,7 +25,7 @@ export default async function Page({ params }: PageProps) {
             <div className="bg-gray-100 border-b border-gray-200 py-20 px-5">
                 <div className="max-w-2xl mx-auto text-center">
 
-                    <span className="text-xs font-semibold tracking-widest uppercase text-emerald-500">
+                    <span className="mb-6 px-4 py-1.5 text-xs font-semibold tracking-wider uppercase bg-[#2FA084]/10 text-[#2FA084] rounded-full border border-[#2FA084]/20">
                         Latest Update
                     </span>
 
