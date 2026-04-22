@@ -31,8 +31,12 @@ export async function POST(req: Request) {
         await repo.save(post)
 
         return NextResponse.json(post)
-    } catch (err) {
-        console.error(err)
-        return NextResponse.json({ error: 'error' }, { status: 500 })
+    } catch (err: any) {
+        console.error("SAVE ERROR:", err)
+
+        return NextResponse.json(
+            { error: err.message ?? 'unknown error' },
+            { status: 500 }
+        )
     }
 }

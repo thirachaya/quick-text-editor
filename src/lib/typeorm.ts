@@ -5,17 +5,21 @@ import { Post } from '@/entities/post.entity'
 let AppDataSource: DataSource
 
 export const getDataSource = async () => {
-    if (AppDataSource && AppDataSource.isInitialized) {
+    if (AppDataSource?.isInitialized) {
         return AppDataSource
     }
 
-    AppDataSource = new DataSource({
+    const ds = new DataSource({
         type: 'postgres',
         url: process.env.DATABASE_URL,
         entities: [Post],
-        synchronize: true,
+        synchronize: false,
         logging: true,
+        ssl: {
+            rejectUnauthorized: false,
+        },
     })
 
-    return AppDataSource.initialize()
+    AppDataSource = await ds.initialize()
+    return AppDataSource
 }
