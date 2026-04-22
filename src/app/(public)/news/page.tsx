@@ -2,6 +2,7 @@ import { getDataSource } from '@/lib/typeorm'
 import { Post } from '@/entities/post.entity'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
 export default async function NewsPage() {
     const ds = await getDataSource()
     const posts = await ds.getRepository(Post).find({
