@@ -8,6 +8,20 @@ export const usePostForm = () => {
     const [slug, setSlug] = useState('')
     const [content, setContent] = useState('')
     const [loading, setLoading] = useState(false)
+    const [fieldError, setFieldError] = useState<{
+        title?: string
+        slug?: string
+        content?: string
+    }>({})
+
+    const isContentEmpty = (html: string) => {
+        const text = html
+            .replace(/<[^>]*>/g, '')
+            .replace(/&nbsp;/g, '')
+            .trim()
+    
+        return text.length === 0
+    }
 
     const handleTitleChange = (value: string) => {
         setTitle(value)
@@ -15,9 +29,28 @@ export const usePostForm = () => {
     }
 
     const submit = async () => {
-        if (!title || !slug || !content) {
-            throw new Error('Missing required fields')
+        const errors: typeof fieldError = {}
+    
+        if (!title.trim()) {
+            errors.title = 'Please enter a title'
         }
+    
+        if (!slug.trim()) {
+            errors.slug = 'Slug is required'
+        } else if (slug.includes(' ')) {
+            errors.slug = 'Slug must not contain spaces'
+        }
+    
+        if (isContentEmpty(content)) {
+            errors.content = 'Content cannot be empty'
+        }
+    
+        if (Object.keys(errors).length > 0) {
+            setFieldError(errors)
+            throw new Error('Validation error')
+        }
+    
+        setFieldError({})
     
         try {
             setLoading(true)
@@ -30,6 +63,12 @@ export const usePostForm = () => {
     
             if (!res.ok) {
                 const data = await res.json()
+    
+                if (data.message?.includes('duplicate')) {
+                    setFieldError({ slug: 'This slug already exists' })
+                    throw new Error('Slug already exists')
+                }
+    
                 throw new Error(data.message || 'Failed to create post')
             }
     
@@ -38,7 +77,6 @@ export const usePostForm = () => {
             setContent('')
     
         } catch (err) {
-            console.error(err)
             throw err
         } finally {
             setLoading(false)
@@ -50,6 +88,7 @@ export const usePostForm = () => {
         slug,
         content,
         loading,
+        fieldError,
         setSlug,
         setContent,
         handleTitleChange,
