@@ -36,7 +36,7 @@ export default function Toolbar({ editor }: any) {
 
     const insertUrl = () => {
         if (!imageUrl) return
-        editor.chain().focus().setImage({ src: imageUrl }).run()
+        editor.chain().focus().setImage({ src: imageUrl }).createParagraphNear().run()
         setImageUrl('')
         setShowUrl(false)
     }
@@ -45,7 +45,7 @@ export default function Toolbar({ editor }: any) {
         const file = e.target.files?.[0]
         if (!file) return
         const reader = new FileReader()
-        reader.onload = () => editor.chain().focus().setImage({ src: reader.result as string }).run()
+        reader.onload = () => editor.chain().focus().setImage({ src: reader.result as string }).createParagraphNear().run()
         reader.readAsDataURL(file)
         e.target.value = ''
     }

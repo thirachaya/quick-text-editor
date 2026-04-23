@@ -7,6 +7,9 @@ import { useState } from "react";
 import CustomAlert from "@/components/alert/CustomAlert";
 import { useRouter } from 'next/navigation'
 import Button from "@/components/form/Button";
+import { useSlugAvailability } from "@/hooks/useSlugAvailability";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function Page() {
   const router = useRouter()
@@ -27,6 +30,8 @@ export default function Page() {
     message: "",
     severity: "success" as "success" | "error",
   });
+
+  const { available, loading: checkingSlug } = useSlugAvailability(slug);
 
   const handleSubmit = async () => {
     try {
@@ -85,20 +90,59 @@ export default function Page() {
               URL Slug
             </label>
 
-            <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden focus-within:ring-4 focus-within:ring-emerald-200 focus-within:border-emerald-500 bg-white">
+            <div
+              className={` relative flex items-center rounded-lg overflow-hidden bg-white
+                ${slug
+                  ? available === true
+                    ? "border border-green-400"
+                    : available === false
+                      ? "border border-red-400"
+                      : "border border-gray-200"
+                  : "border border-gray-200"
+                }
+              focus-within:ring-4 focus-within:ring-emerald-200
+              focus-within:border-emerald-500
+            `}>
+              {/* prefix */}
               <span className="px-4 py-3 bg-gray-50 text-gray-500 text-sm font-mono border-r">
                 /news/
               </span>
+
+              {/* input */}
               <input
-                className="flex-1 px-4 py-3 outline-none text-gray-800 font-mono text-sm"
+                className="flex-1 px-4 py-3 pr-10 outline-none text-gray-800 font-mono text-sm"
                 value={slug}
                 onChange={(e) => setSlug(e.target.value)}
-                placeholder="example-title"
-              />
-            </div>
-            {fieldError.slug && (
-                <p className="text-red-500 text-sm mt-1">{fieldError.slug}</p>
+                placeholder="example-title"/>
+
+              {/* status icon */}
+              {slug && (
+                <div className="absolute right-3 flex items-center">
+                  {checkingSlug && (
+                    <span className="w-4 h-4 border-2 border-gray-300 border-t-emerald-500 rounded-full animate-spin" />
+                  )}
+
+                  {!checkingSlug && available === true && (
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className="text-green-500 text-[14px] transition-transform scale-110"
+                    />
+                  )}
+
+                  {!checkingSlug && available === false && (
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      className="text-red-500 text-[14px] transition-transform scale-110"
+                    />
+                  )}
+                </div>
               )}
+            </div>
+
+            {/* error */}
+            {fieldError.slug && (
+              <p className="text-red-500 text-sm mt-1">{fieldError.slug}</p>
+            )}
           </div>
 
           {/* Editor */}
@@ -110,8 +154,8 @@ export default function Page() {
               <TiptapEditor value={content} onChange={setContent} />
             </div>
             {fieldError.content && (
-                <p className="text-red-500 text-sm mt-1">{fieldError.content}</p>
-              )}
+              <p className="text-red-500 text-sm mt-1">{fieldError.content}</p>
+            )}
           </div>
 
           {/* Footer */}
