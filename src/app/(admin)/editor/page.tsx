@@ -3,12 +3,38 @@
 import TiptapEditor from '@/components/editor/TiptapEditor'
 import Input from '@/components/form/Input'
 import { usePostForm } from '@/hooks/usePostForm'
+import { useState } from 'react'
+import CustomAlert from '@/components/alert/CustomAlert'
 
 export default function Page() {
     const {
         title, slug, content, loading,
         setSlug, setContent, handleTitleChange, submit,
     } = usePostForm()
+
+    const [alert, setAlert] = useState({
+        open: false,
+        message: '',
+        severity: 'success' as 'success' | 'error'
+    })
+
+    const handleSubmit = async () => {
+        try {
+            await submit()
+
+            setAlert({
+                open: true,
+                message: 'Post created successfully',
+                severity: 'success'
+            })
+        } catch (err: any) {
+            setAlert({
+                open: true,
+                message: err.message || 'Something went wrong',
+                severity: 'error'
+            })
+        }
+    }
 
     return (
         <div className="min-h-screen bg-gray-100 py-12 px-5 font-sans">
@@ -69,7 +95,7 @@ export default function Page() {
                     {/* Footer */}
                     <div className="flex justify-end pt-4 border-t border-gray-100">
                         <button
-                            onClick={submit}
+                            onClick={handleSubmit}
                             disabled={loading}
                             className="flex items-center px-6 py-3 bg-emerald-700 text-white rounded-lg font-semibold text-sm shadow hover:bg-emerald-500 hover:-translate-y-0.5 transition disabled:opacity-60 disabled:cursor-not-allowed"
                         >
@@ -82,6 +108,14 @@ export default function Page() {
 
                 </div>
             </div>
+
+            {/* Alert */}
+            <CustomAlert
+                open={alert.open}
+                message={alert.message}
+                severity={alert.severity}
+                onClose={() => setAlert({ ...alert, open: false })}
+            />
         </div>
     )
 }

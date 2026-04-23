@@ -16,28 +16,30 @@ export const usePostForm = () => {
 
     const submit = async () => {
         if (!title || !slug || !content) {
-            alert('Missing required fields')
-            return
+            throw new Error('Missing required fields')
         }
-
+    
         try {
             setLoading(true)
-
+    
             const res = await fetch('/api/news', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title, slug, content }),
             })
-
-            if (!res.ok) throw new Error('Failed')
-
-            alert('Post created!')
+    
+            if (!res.ok) {
+                const data = await res.json()
+                throw new Error(data.message || 'Failed to create post')
+            }
+    
             setTitle('')
             setSlug('')
             setContent('')
+    
         } catch (err) {
             console.error(err)
-            alert('Error creating post')
+            throw err
         } finally {
             setLoading(false)
         }

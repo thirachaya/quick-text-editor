@@ -18,6 +18,27 @@ export async function POST(req: Request) {
     try {
         const body = await req.json()
 
+        if (!body.title) {
+            return NextResponse.json(
+                { message: 'Title is required' },
+                { status: 400 }
+            )
+        }
+
+        if (!body.slug) {
+            return NextResponse.json(
+                { message: 'Slug is required' },
+                { status: 400 }
+            )
+        }
+
+        if (!body.content) {
+            return NextResponse.json(
+                { message: 'Content is required' },
+                { status: 400 }
+            )
+        }
+
         const ds = await getDataSource()
         const repo = ds.getRepository(Post)
 
@@ -31,11 +52,19 @@ export async function POST(req: Request) {
         await repo.save(post)
 
         return NextResponse.json(post)
+
     } catch (err: any) {
         console.error("SAVE ERROR:", err)
 
+        if (err.code === '23505') { // 23505: error code of postgres for unique constraint violation
+            return NextResponse.json(
+                { message: 'Slug already exists. Please use another one.' },
+                { status: 400 }
+            )
+        }
+
         return NextResponse.json(
-            { error: err.message ?? 'unknown error' },
+            { message: 'Internal server error' },
             { status: 500 }
         )
     }
