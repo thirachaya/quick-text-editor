@@ -3,10 +3,15 @@ import { DataSource } from 'typeorm'
 import { Post } from '@/entities/post.entity'
 
 let AppDataSource: DataSource
+let initializingPromise: Promise<DataSource> | null = null
 
 export const getDataSource = async () => {
     if (AppDataSource && AppDataSource.isInitialized) {
         return AppDataSource
+    }
+
+    if (initializingPromise) {
+        return initializingPromise
     }
 
     AppDataSource = new DataSource({
@@ -17,5 +22,9 @@ export const getDataSource = async () => {
         logging: true,
     })
 
-    return AppDataSource.initialize()
+    initializingPromise = AppDataSource.initialize().finally(() => {
+        initializingPromise = null
+    })
+
+    return initializingPromise
 }

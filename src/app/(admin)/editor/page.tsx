@@ -6,6 +6,7 @@ import { usePostForm } from "@/hooks/usePostForm";
 import { useState } from "react";
 import CustomAlert from "@/components/alert/CustomAlert";
 import { useRouter } from 'next/navigation'
+import Button from "@/components/form/Button";
 
 export default function Page() {
   const router = useRouter()
@@ -41,10 +42,10 @@ export default function Page() {
         router.push(`/news/${slug}`)
       }, 1200)
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       setAlert({
         open: true,
-        message: err.message || "Something went wrong",
+        message: (err as Error).message || "Something went wrong",
         severity: "error",
       });
     }
@@ -115,7 +116,7 @@ export default function Page() {
 
           {/* Footer */}
           <div className="flex justify-end pt-4 border-t border-gray-100">
-            <button
+            <Button
               onClick={handleSubmit}
               disabled={loading}
               className="flex items-center px-6 py-3 bg-emerald-700 text-white rounded-lg font-semibold text-sm shadow hover:bg-emerald-500 hover:-translate-y-0.5 transition disabled:opacity-60 disabled:cursor-not-allowed"
@@ -124,7 +125,7 @@ export default function Page() {
                 <span className="w-4 h-4 mr-2 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               )}
               {loading ? "Creating post..." : "Post Now"}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
