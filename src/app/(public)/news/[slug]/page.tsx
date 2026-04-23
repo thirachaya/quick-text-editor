@@ -32,7 +32,7 @@ export default async function Page({ params }: PageProps) {
             <span>/</span>
 
             <Link href="/news" className="hover:text-emerald-600 transition">
-              News
+              Post List
             </Link>
 
             <span>/</span>
