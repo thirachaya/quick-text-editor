@@ -5,8 +5,10 @@ import Input from "@/components/form/Input";
 import { usePostForm } from "@/hooks/usePostForm";
 import { useState } from "react";
 import CustomAlert from "@/components/alert/CustomAlert";
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
+  const router = useRouter()
   const {
     title,
     slug,
@@ -34,6 +36,11 @@ export default function Page() {
         message: "Post created successfully",
         severity: "success",
       });
+
+      setTimeout(() => {
+        router.push(`/news/${slug}`)
+      }, 1200)
+
     } catch (err: any) {
       setAlert({
         open: true,
@@ -58,7 +65,7 @@ export default function Page() {
           {/* Title */}
           <div>
             <label className="text-sm font-semibold text-emerald-700 mb-2 block">
-              Article Title
+              Title of the post
             </label>
             <Input
               value={title}
