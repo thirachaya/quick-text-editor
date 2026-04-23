@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function Navbar() {
     return (
         <nav className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
-            <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
                 <Link href="/" className="text-2xl font-bold text-[#1F6F5F] tracking-tighter">
                     Blew Noxs<span className="text-[#2FA084]">.</span>
                 </Link>
