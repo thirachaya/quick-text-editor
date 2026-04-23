@@ -21,6 +21,13 @@ export default function Navbar() {
                     >
                         Post
                     </Link>
+                    <Link
+                        href="https://teerachaya-portfolio.vercel.app"
+                        target="_blank"
+                        className="text-sm font-medium text-gray-600 hover:text-[#2FA084] transition-colors"
+                    >
+                        About Me
+                    </Link>
 
                     <Link
                         href="/editor"

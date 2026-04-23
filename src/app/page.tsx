@@ -28,22 +28,31 @@ export default function Home() {
       </div>
 
       {/* Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-        <Link
-          href="/editor"
-          className="flex items-center justify-center px-8 py-3.5 bg-[#1F6F5F] text-white font-medium rounded-xl hover:bg-[#2FA084] transition-all shadow-[0_4px_14px_0_rgba(31,111,95,0.39)] hover:shadow-[0_6px_20px_rgba(47,160,132,0.23)] hover:-translate-y-0.5"
-        >
-          Start Writing
-        </Link>
+      <div className="w-full max-w-md">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Link
+            href="/editor"
+            className="w-full flex items-center justify-center px-8 py-3.5 bg-[#1F6F5F] text-white font-medium rounded-xl hover:bg-[#2FA084] transition-all shadow-[0_4px_14px_0_rgba(31,111,95,0.39)] hover:shadow-[0_6px_20px_rgba(47,160,132,0.23)] hover:-translate-y-0.5"
+          >
+            Start Writing
+          </Link>
+
+          <Link
+            href="/news"
+            className="w-full flex items-center justify-center px-8 py-3.5 bg-white text-[#1F6F5F] font-medium rounded-xl border-2 border-gray-200 hover:border-[#2FA084] hover:text-[#2FA084] transition-all"
+          >
+            Explore Posts
+          </Link>
+        </div>
 
         <Link
-          href="/news"
-          className="flex items-center justify-center px-8 py-3.5 bg-white text-[#1F6F5F] font-medium rounded-xl border-2 border-gray-200 hover:border-[#2FA084] hover:text-[#2FA084] transition-all"
+          href="https://teerachaya-portfolio.vercel.app"
+          target="_blank"
+          className="mt-4 w-full flex items-center justify-center px-8 py-3.5 bg-white text-[#1F6F5F] font-medium rounded-xl border-2 border-gray-200 hover:border-[#2FA084] hover:text-[#2FA084] transition-all"
         >
-          Explore Posts
+          About Me →
         </Link>
       </div>
-
     </div>
   );
 }
