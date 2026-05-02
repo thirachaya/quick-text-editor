@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
+import RedirectPopup from "@/components/ui/RedirectPopup";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center p-6 text-center bg-[#F7FBFA]">
+    <div className="flex flex-col flex-1 items-center justify-center p-6 text-center bg-[#F7FBFA] min-h-screen">
 
       {/* Badge */}
       <span className="mb-6 px-4 py-1.5 text-xs font-semibold tracking-wider uppercase bg-[#2FA084]/10 text-[#2FA084] rounded-full border border-[#2FA084]/20">
@@ -28,7 +29,7 @@ export default function Home() {
       </div>
 
       {/* Buttons */}
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md space-y-4">
         <div className="flex flex-col sm:flex-row gap-4">
           <Link
             href="/editor"
@@ -48,11 +49,13 @@ export default function Home() {
         <Link
           href="https://teerachaya-portfolio.vercel.app"
           target="_blank"
-          className="mt-4 w-full flex items-center justify-center px-8 py-3.5 bg-white text-[#1F6F5F] font-medium rounded-xl border-2 border-gray-200 hover:border-[#2FA084] hover:text-[#2FA084] transition-all"
+          className="w-full flex items-center justify-center px-8 py-3.5 bg-white text-[#1F6F5F] font-medium rounded-xl border-2 border-gray-200 hover:border-[#2FA084] hover:text-[#2FA084] transition-all"
         >
           About Me →
         </Link>
       </div>
+      
+      <RedirectPopup />
     </div>
   );
 }

@@ -62,29 +62,17 @@ export default async function Page({ params }: PageProps) {
         <article
           className="
                         prose prose-lg max-w-none
-
-                        /* Text */
                         prose-p:text-gray-700
-
-                        /* Headings */
                         prose-headings:text-emerald-800
-
-                        /* Links */
                         prose-a:text-emerald-500 
                         hover:prose-a:text-emerald-700
                         prose-a:no-underline
                         prose-a:border-b prose-a:border-emerald-300
-
-                        /* Images */
                         prose-img:rounded-xl 
                         prose-img:shadow-md 
                         prose-img:border 
                         prose-img:border-gray-200
-
-                        /* Lists */
                         prose-li:marker:text-emerald-500
-
-                        /* Blockquote */
                         prose-blockquote:border-l-4 
                         prose-blockquote:border-emerald-500
                         prose-blockquote:bg-emerald-50
@@ -93,15 +81,11 @@ export default async function Page({ params }: PageProps) {
                         prose-blockquote:px-5
                         prose-blockquote:py-3
                         prose-blockquote:rounded-r-lg
-
-                        /* Inline code */
                         prose-code:bg-gray-100
                         prose-code:text-emerald-800
                         prose-code:px-1.5
                         prose-code:py-0.5
                         prose-code:rounded
-
-                        /* Code block */
                         prose-pre:bg-gray-800
                         prose-pre:text-gray-100
                         prose-pre:rounded-lg
